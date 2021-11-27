@@ -2,17 +2,17 @@ import { PropTypes } from 'prop-types';
 import React, { useState } from 'react';
 
 const Input = ({ success, secretWord }) => {
-  const [guess, setGuess] = useState('');
+  const [guessWord, setGuessWord] = useState('');
 
   const handleGuessChange = ({ target }) => {
-    setGuess(target.value);
+    setGuessWord(target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     //TODO: Update guessedWords global state
     //TODO: check against secretWord and optionally update success global state
-    setGuess('');
+    setGuessWord('');
   };
 
   if (success) {
@@ -24,7 +24,7 @@ const Input = ({ success, secretWord }) => {
       <form className="form-inline">
         <input
           onChange={handleGuessChange}
-          value={guess}
+          value={guessWord}
           className="mb-2 mx-sm-3"
           data-test="input"
           type="text"
@@ -41,25 +41,6 @@ const Input = ({ success, secretWord }) => {
     </div>
   );
 };
-// const Input = ({ onSubmit }) => {
-//   const [guess, setGuess] = useState('');
-
-//   const handleGuessChange = ({ target }) => {
-//     setGuess(target.value);
-//   };
-
-//   const handleSubmit = () => {
-//     onSubmit(guess);
-//     setGuess('');
-//   };
-
-//   return (
-//     <div data-test="component-input">
-//       <input onChange={handleGuessChange} value={guess}></input>
-//       <button onClick={handleSubmit}>Submit</button>
-//     </div>
-//   );
-// };
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,

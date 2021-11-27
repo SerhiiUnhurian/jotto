@@ -18,7 +18,7 @@ const GuessedWords = ({ guessedWords }) => {
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
-              <th>Guesse</th>
+              <th>Guess</th>
               <th>Letters match</th>
             </tr>
           </thead>

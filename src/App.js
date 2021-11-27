@@ -1,15 +1,30 @@
 import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
 import './App.css';
+import Input from './Input';
+import { useState } from 'react';
 
 function App() {
+  // const [guessedWords, setGuessedWords] = useState([]);
+
+  // const handleSubmit = (value) => {
+  //   setGuessedWords((guessedWords) => [
+  //     ...guessedWords,
+  //     { guessedWord: value, ByteLengthQueuingStrategy: 0 },
+  //   ]);
+  // };
+
+  // TODO: Get props from shared state
+  const success = false;
+  const secretWord = 'party';
+  const guessedWords = [];
+
   return (
-    <div className="container">
+    <div data-test="component-app" className="container">
       <h1>Jotto</h1>
       <Congrats success={true} />
-      <GuessedWords
-        guessedWords={[{ guessedWord: 'study', letterMatchCount: 3 }]}
-      />
+      <Input secretWord={secretWord} success={success} />
+      <GuessedWords guessedWords={guessedWords} />
     </div>
   );
 }
