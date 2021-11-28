@@ -20,7 +20,7 @@ function App() {
   // };
 
   // TODO: Get props from shared state
-  const success = false;
+
   // const secretWord = 'party';
   // const guessedWords = [];
 
@@ -28,7 +28,7 @@ function App() {
     <div data-test="component-app" className="container">
       <h1>Jotto</h1>
       <Congrats success={true} />
-      <Input secretWord={secretWord} success={success} />
+      <Input secretWord={secretWord} />
       <GuessedWords guessedWords={guessedWords} />
     </div>
   );

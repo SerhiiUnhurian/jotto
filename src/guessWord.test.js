@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import App from './App';
-import { findByTestAttr } from '../test/testUtils';
+import { findByTestAttr, storeFactory } from '../test/testUtils';
+import { Provider } from 'react-redux';
 
 /**
  * Functional tests for App components
@@ -12,21 +13,26 @@ import { findByTestAttr } from '../test/testUtils';
  * @param {object} state - Initial State
  * @returns {Wrapper} - Enzyme wrapper of mounted App component
  */
-const setup = (state = {}) => {
-  //TODO: Apply state
-  const wrapper = mount(<App />);
+const setup = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  const wrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 
   const input = findByTestAttr(wrapper, 'input');
   input.simulate('change', { target: { value: 'train' } });
 
   const submitBtn = findByTestAttr(wrapper, 'submit-btn');
   submitBtn.simulate('click', { preventDefault: () => {} });
+
   return wrapper;
 };
 
 // No words guessed in the table
 describe.skip('no words guessed', () => {
-  let wrapper = mount(<App />);
+  let wrapper;
 
   beforeEach(() => {
     wrapper = setup({
@@ -42,9 +48,9 @@ describe.skip('no words guessed', () => {
   });
 });
 
-// Some words guessed in the table
+// // Some words guessed in the table
 describe.skip('some words guessed', () => {
-  let wrapper = mount(<App />);
+  let wrapper;
 
   beforeEach(() => {
     wrapper = setup({
@@ -61,7 +67,7 @@ describe.skip('some words guessed', () => {
 });
 
 describe.skip('guess secret word', () => {
-  let wrapper = mount(<App />);
+  let wrapper;
 
   beforeEach(() => {
     wrapper = setup({

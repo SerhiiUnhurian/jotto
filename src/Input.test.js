@@ -1,8 +1,9 @@
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Input from './Input';
-import { findByTestAttr } from '../test/testUtils';
+import { findByTestAttr, storeFactory } from '../test/testUtils';
 import { checkProps } from '../test/testUtils';
 import React from 'react';
+import { Provider } from 'react-redux';
 
 const mockSetGuess = jest.fn();
 
@@ -11,8 +12,13 @@ jest.mock('react', () => ({
   useState: (initialState) => [initialState, mockSetGuess],
 }));
 
-const setup = (props = {}) => {
-  return shallow(<Input {...props} />);
+const setup = (initialStoreState = {}, props = {}) => {
+  const store = storeFactory(initialStoreState);
+  return mount(
+    <Provider store={store}>
+      <Input {...props} />
+    </Provider>
+  );
 };
 
 test('should render without error', () => {
@@ -47,7 +53,7 @@ describe('input field', () => {
   });
 });
 
-describe('success prop is true', () => {
+describe('success state is true', () => {
   test('should not render input', () => {
     const wrapper = setup({ success: true });
     const input = findByTestAttr(wrapper, 'input');
@@ -61,7 +67,7 @@ describe('success prop is true', () => {
   });
 });
 
-describe('success prop is false', () => {
+describe('success state is false', () => {
   test('should render input', () => {
     const wrapper = setup({ success: false });
     const input = findByTestAttr(wrapper, 'input');

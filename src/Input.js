@@ -1,8 +1,10 @@
 import { PropTypes } from 'prop-types';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
-const Input = ({ success, secretWord }) => {
+const Input = ({ secretWord }) => {
   const [guessWord, setGuessWord] = useState('');
+  const success = useSelector((state) => state.success);
 
   const handleGuessChange = ({ target }) => {
     setGuessWord(target.value);
