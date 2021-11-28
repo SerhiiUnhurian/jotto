@@ -2,11 +2,16 @@ import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
 import './App.css';
 import Input from './Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getSecretWord } from './actions/index';
 
 function App() {
-  // const [guessedWords, setGuessedWords] = useState([]);
+  const [secretWord, setSecretWord] = useState('');
+  const [guessedWords, setGuessedWords] = useState([]);
 
+  useEffect(() => {
+    setSecretWord(getSecretWord());
+  }, []);
   // const handleSubmit = (value) => {
   //   setGuessedWords((guessedWords) => [
   //     ...guessedWords,
@@ -16,8 +21,8 @@ function App() {
 
   // TODO: Get props from shared state
   const success = false;
-  const secretWord = 'party';
-  const guessedWords = [];
+  // const secretWord = 'party';
+  // const guessedWords = [];
 
   return (
     <div data-test="component-app" className="container">
