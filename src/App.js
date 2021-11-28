@@ -3,7 +3,7 @@ import GuessedWords from './GuessedWords';
 import './App.css';
 import Input from './Input';
 import { useEffect, useState } from 'react';
-import { getSecretWord } from './actions/index';
+import { getSecretWord } from './actions';
 
 function App() {
   const [secretWord, setSecretWord] = useState('');

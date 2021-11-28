@@ -1,5 +1,5 @@
 import moxios from 'moxios';
-import { getSecretWord } from './index';
+import { getSecretWord } from '.';
 
 beforeEach(() => {
   moxios.install();

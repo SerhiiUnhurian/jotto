@@ -5,7 +5,7 @@ import { findByTestAttr } from '../test/testUtils';
 /**
  * Activate global mock to mack sure getSecretWord doesn't make network call
  */
-jest.mock('./actions');
+// jest.mock('./actions');
 import { getSecretWord as mockGetSecretWord } from './actions';
 
 const setup = () => {
