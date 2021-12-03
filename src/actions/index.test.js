@@ -2,6 +2,7 @@ import moxios from 'moxios';
 import { getSecretWord, correctGuess } from '.';
 import { actionTypes } from './index';
 
+// TODO: remove
 describe('correctGuess', () => {
   test('should return action with type `CORRECT_GUESS`', () => {
     const action = correctGuess();
