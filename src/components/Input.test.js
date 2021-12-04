@@ -1,7 +1,6 @@
 import { mount } from 'enzyme';
 import Input from './Input';
-import { findByTestAttr, storeFactory } from '../test/testUtils';
-import { checkProps } from '../test/testUtils';
+import { findByTestAttr, storeFactory } from '../../test/testUtils';
 import React from 'react';
 import { Provider } from 'react-redux';
 
@@ -25,10 +24,6 @@ test('should render without error', () => {
   const wrapper = setup();
   const component = findByTestAttr(wrapper, 'component-input');
   expect(component.length).toBe(1);
-});
-
-test('should not throw warning with expected props', () => {
-  checkProps(Input, { secretWord: 'party' });
 });
 
 describe('input field', () => {

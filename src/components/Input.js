@@ -1,9 +1,9 @@
 import { PropTypes } from 'prop-types';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { guessWord } from './actions';
+import { guessWord } from '../actions';
 
-const Input = ({ secretWord }) => {
+const Input = () => {
   const [currentGuess, setCurrentGuess] = useState('');
   const success = useSelector((state) => state.success);
   const dispatch = useDispatch();
@@ -44,14 +44,6 @@ const Input = ({ secretWord }) => {
       </form>
     </div>
   );
-};
-
-Input.propTypes = {
-  secretWord: PropTypes.string.isRequired,
-};
-
-Input.defaultProps = {
-  secretWord: '',
 };
 
 export default Input;

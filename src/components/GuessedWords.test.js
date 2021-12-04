@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme';
-import { findByTestAttr } from '../test/testUtils';
-import { checkProps } from '../test/testUtils';
+import { findByTestAttr } from '../../test/testUtils';
+import { checkProps } from '../../test/testUtils';
 import GuessedWords from './GuessedWords';
 
 const setup = (props = {}) => shallow(<GuessedWords {...props} />);

@@ -1,9 +1,8 @@
 import Congrats from './Congrats';
 import GuessedWords from './GuessedWords';
-import './App.css';
 import Input from './Input';
-import { useEffect, useState } from 'react';
-import { getSecretWord } from './actions';
+import { useEffect } from 'react';
+import { getSecretWord } from '../actions';
 import { useSelector, useDispatch } from 'react-redux';
 
 function App() {

@@ -29,7 +29,6 @@ describe('getSecretWord', () => {
       });
     });
 
-    // TODO: Update to test App in Redux / Context sections
     return store.dispatch(getSecretWord()).then(() => {
       const { secretWord } = store.getState();
       expect(secretWord).toBe('party');

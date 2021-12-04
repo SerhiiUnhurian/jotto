@@ -1,13 +1,13 @@
 import { mount } from 'enzyme';
 import App from './App';
-import { findByTestAttr, storeFactory } from '../test/testUtils';
+import { findByTestAttr, storeFactory } from '../../test/testUtils';
 import { Provider } from 'react-redux';
 
 /**
  * Activate global mock to mack sure getSecretWord doesn't make network call
  */
-jest.mock('./actions');
-import { getSecretWord as mockGetSecretWord } from './actions';
+jest.mock('../actions');
+import { getSecretWord as mockGetSecretWord } from '../actions';
 
 const setup = () => {
   const store = storeFactory();
