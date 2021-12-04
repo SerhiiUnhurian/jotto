@@ -4,6 +4,7 @@ import { getLetterMatchCount } from '../helpers/index';
 export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESS_WORD: 'GUESS_WORD',
+  SET_SECRET_WORD: 'SET_SECRET_WORD',
 };
 
 // action creators
@@ -32,8 +33,17 @@ export const guessWord = (guessedWord) => {
 };
 
 export const getSecretWord = () => {
-  // TODO: Update to test App in Redux / Context sections
-  return axios.get('http://localhost:3030').then((response) => {
-    return response.data;
-  });
+  return async (dispatch) => {
+    const response = await axios.get('http://localhost:3030');
+    const secretWord = response.data;
+    dispatch({ type: actionTypes.SET_SECRET_WORD, payload: secretWord });
+
+    // return axios.get('http://localhost:3030').then((response) => {
+    //   const secretWord = response.data;
+    //   dispatch({
+    //     type: actionTypes.SET_SECRET_WORD,
+    //     payload: secretWord,
+    //   });
+    // });
+  };
 };

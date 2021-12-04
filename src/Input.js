@@ -1,20 +1,22 @@
 import { PropTypes } from 'prop-types';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { guessWord } from './actions';
 
 const Input = ({ secretWord }) => {
-  const [guessWord, setGuessWord] = useState('');
+  const [currentGuess, setCurrentGuess] = useState('');
   const success = useSelector((state) => state.success);
+  const dispatch = useDispatch();
 
   const handleGuessChange = ({ target }) => {
-    setGuessWord(target.value);
+    setCurrentGuess(target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //TODO: Update guessedWords global state
-    //TODO: check against secretWord and optionally update success global state
-    setGuessWord('');
+
+    dispatch(guessWord(currentGuess));
+    setCurrentGuess('');
   };
 
   if (success) {
@@ -26,7 +28,7 @@ const Input = ({ secretWord }) => {
       <form className="form-inline">
         <input
           onChange={handleGuessChange}
-          value={guessWord}
+          value={currentGuess}
           className="mb-2 mx-sm-3"
           data-test="input"
           type="text"

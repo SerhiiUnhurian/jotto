@@ -4,30 +4,22 @@ import './App.css';
 import Input from './Input';
 import { useEffect, useState } from 'react';
 import { getSecretWord } from './actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 function App() {
-  const [secretWord, setSecretWord] = useState('');
-  const [guessedWords, setGuessedWords] = useState([]);
+  const success = useSelector((state) => state.success);
+  const secretWord = useSelector((state) => state.secretWord);
+  const guessedWords = useSelector((state) => state.guessedWords);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setSecretWord(getSecretWord());
+    dispatch(getSecretWord());
   }, []);
-  // const handleSubmit = (value) => {
-  //   setGuessedWords((guessedWords) => [
-  //     ...guessedWords,
-  //     { guessedWord: value, ByteLengthQueuingStrategy: 0 },
-  //   ]);
-  // };
-
-  // TODO: Get props from shared state
-
-  // const secretWord = 'party';
-  // const guessedWords = [];
 
   return (
     <div data-test="component-app" className="container">
       <h1>Jotto</h1>
-      <Congrats success={true} />
+      <Congrats success={success} />
       <Input secretWord={secretWord} />
       <GuessedWords guessedWords={guessedWords} />
     </div>

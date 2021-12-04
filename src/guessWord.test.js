@@ -1,11 +1,15 @@
+/**
+ * Functional tests for App components
+ */
 import { mount } from 'enzyme';
 import App from './App';
 import { findByTestAttr, storeFactory } from '../test/testUtils';
 import { Provider } from 'react-redux';
 
 /**
- * Functional tests for App components
+ * Activate global mock to mack sure getSecretWord doesn't make network call
  */
+jest.mock('./actions');
 
 /**
  * Creates wrapper with specified conditions,
@@ -31,7 +35,7 @@ const setup = (initialState = {}) => {
 };
 
 // No words guessed in the table
-describe.skip('no words guessed', () => {
+describe('no words guessed', () => {
   let wrapper;
 
   beforeEach(() => {
@@ -49,7 +53,7 @@ describe.skip('no words guessed', () => {
 });
 
 // // Some words guessed in the table
-describe.skip('some words guessed', () => {
+describe('some words guessed', () => {
   let wrapper;
 
   beforeEach(() => {
@@ -66,7 +70,7 @@ describe.skip('some words guessed', () => {
   });
 });
 
-describe.skip('guess secret word', () => {
+describe('guess secret word', () => {
   let wrapper;
 
   beforeEach(() => {

@@ -1,6 +1,7 @@
 import moxios from 'moxios';
 import { getSecretWord, correctGuess } from '.';
 import { actionTypes } from './index';
+import store from '../configureStore';
 
 // TODO: remove
 describe('correctGuess', () => {
@@ -29,7 +30,8 @@ describe('getSecretWord', () => {
     });
 
     // TODO: Update to test App in Redux / Context sections
-    return getSecretWord().then((secretWord) => {
+    return store.dispatch(getSecretWord()).then(() => {
+      const { secretWord } = store.getState();
       expect(secretWord).toBe('party');
     });
   });
