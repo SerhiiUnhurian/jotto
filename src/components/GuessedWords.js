@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 const GuessedWords = ({ guessedWords }) => {
   const guessedWordsRows = guessedWords.map((guess, idx) => (
     <tr key={idx} data-test="guessed-word">
+      <td>{idx + 1}</td>
       <td>{guess.guessedWord}</td>
       <td>{guess.letterMatchCount}</td>
     </tr>
@@ -18,6 +19,7 @@ const GuessedWords = ({ guessedWords }) => {
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
+              <th>№</th>
               <th>Guess</th>
               <th>Letters match</th>
             </tr>
