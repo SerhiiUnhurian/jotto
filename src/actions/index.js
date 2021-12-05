@@ -5,6 +5,7 @@ export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESS_WORD: 'GUESS_WORD',
   SET_SECRET_WORD: 'SET_SECRET_WORD',
+  RESET_GAME: 'RESET_GAME',
 };
 
 // action creators
@@ -45,5 +46,16 @@ export const getSecretWord = () => {
     //     payload: secretWord,
     //   });
     // });
+  };
+};
+
+// export const setSecretWord = (secretWord) => {
+//   return { type: actionTypes.SET_SECRET_WORD, payload: secretWord };
+// };
+
+export const resetGame = () => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.RESET_GAME });
+    dispatch(getSecretWord());
   };
 };

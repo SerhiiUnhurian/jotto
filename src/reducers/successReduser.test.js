@@ -11,7 +11,12 @@ test('should return previous state for unknown action', () => {
   expect(newState).toBe(false);
 });
 
-test('should return new state for known action', () => {
+test('should return `true` for `CORRECT_GUESS` action', () => {
   const newState = successReducer(false, { type: actionTypes.CORRECT_GUESS });
   expect(newState).toBe(true);
+});
+
+test('should return `false` for `RESET_GAME` action', () => {
+  const newState = successReducer(true, { type: actionTypes.RESET_GAME });
+  expect(newState).toBe(false);
 });

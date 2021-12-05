@@ -20,7 +20,7 @@ describe('getSecretWord', () => {
     moxios.uninstall();
   });
 
-  test('should return secret word', () => {
+  test('should set secret word', () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
