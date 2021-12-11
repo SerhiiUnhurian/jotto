@@ -1,7 +1,7 @@
 import { PropTypes } from 'prop-types';
 
-const NewWordButton = ({ success, onClick }) => {
-  return success ? (
+const NewWordButton = ({ display, onClick }) => {
+  return display ? (
     <button
       className="btn btn-primary mb-2"
       data-test="component-new-word-btn"
@@ -13,7 +13,7 @@ const NewWordButton = ({ success, onClick }) => {
 };
 
 NewWordButton.propTypes = {
-  success: PropTypes.bool.isRequired,
+  display: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

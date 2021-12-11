@@ -4,6 +4,7 @@ import ReduxThunk from 'redux-thunk';
 
 const initialState = {
   success: false,
+  gaveUp: false,
   secretWord: null,
   guessedWords: [],
 };
