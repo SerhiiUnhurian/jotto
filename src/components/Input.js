@@ -36,7 +36,7 @@ const Input = () => {
         <input
           onChange={handleGuessChange}
           value={currentGuess}
-          className="mb-2 mx-sm-3"
+          className="mb-2 mr-3"
           data-test="input"
           type="text"
           placeholder="enter guess"

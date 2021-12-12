@@ -7,6 +7,7 @@ const initialState = {
   gaveUp: false,
   secretWord: null,
   guessedWords: [],
+  enterSecretWord: false,
 };
 
 export const middlewares = [ReduxThunk];

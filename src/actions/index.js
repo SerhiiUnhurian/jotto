@@ -7,6 +7,9 @@ export const actionTypes = {
   SET_SECRET_WORD: 'SET_SECRET_WORD',
   RESET_GAME: 'RESET_GAME',
   GIVE_UP: 'GIVE_UP',
+  // SECRET_WORD_ENTERING: 'SECRET_WORD_ENTERING',
+  // SECRET_WORD_ENTERED: 'SECRET_WORD_ENTERED',
+  ENTERING_SECRET_WORD: 'ENTERING_SECRET_WORD',
 };
 
 // action creators
@@ -34,11 +37,18 @@ export const guessWord = (guessedWord) => {
   };
 };
 
+export const setSecretWord = (secretWord) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.SET_SECRET_WORD, payload: secretWord });
+    dispatch(setEnterSecretWord(false));
+  };
+};
+
 export const getSecretWord = () => {
   return async (dispatch) => {
     const response = await axios.get('http://localhost:3030');
     const secretWord = response.data;
-    dispatch({ type: actionTypes.SET_SECRET_WORD, payload: secretWord });
+    dispatch(setSecretWord(secretWord));
 
     // return axios.get('http://localhost:3030').then((response) => {
     //   const secretWord = response.data;
@@ -50,10 +60,6 @@ export const getSecretWord = () => {
   };
 };
 
-// export const setSecretWord = (secretWord) => {
-//   return { type: actionTypes.SET_SECRET_WORD, payload: secretWord };
-// };
-
 export const resetGame = () => {
   return (dispatch) => {
     dispatch({ type: actionTypes.RESET_GAME });
@@ -63,4 +69,8 @@ export const resetGame = () => {
 
 export const giveUp = () => {
   return { type: actionTypes.GIVE_UP };
+};
+
+export const setEnterSecretWord = (isEntering) => {
+  return { type: actionTypes.ENTERING_SECRET_WORD, payload: isEntering };
 };

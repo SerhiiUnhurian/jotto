@@ -28,8 +28,7 @@ test('should not throw warning with expected props', () => {
 test('should call `onClick` upon button click', () => {
   const mockOnClick = jest.fn();
   const wrapper = setup({ display: true, onClick: mockOnClick });
-  const submitBtn = findByTestAttr(wrapper, 'component-new-word-btn');
-  submitBtn.simulate('click', { preventDefault: () => {} });
+  wrapper.simulate('click', { preventDefault: () => {} });
 
   expect(mockOnClick).toHaveBeenCalled();
 });
