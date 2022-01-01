@@ -1,8 +1,9 @@
-import { createStore, applyMiddleware } from 'redux';
-import rootReducer from './reducers';
-import ReduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./reducers";
+import ReduxThunk from "redux-thunk";
 
-const initialState = {
+export const initialState = {
+  serverError: null,
   success: false,
   gaveUp: false,
   secretWord: null,

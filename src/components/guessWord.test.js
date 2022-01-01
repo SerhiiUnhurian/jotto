@@ -1,15 +1,15 @@
 /**
  * Functional tests for App components
  */
-import { mount } from 'enzyme';
-import App from './App';
-import { findByTestAttr, storeFactory } from '../../test/testUtils';
-import { Provider } from 'react-redux';
+import { mount } from "enzyme";
+import App from "./App";
+import { findByTestAttr, storeFactory } from "../../test/testUtils";
+import { Provider } from "react-redux";
 
 /**
  * Activate global mock to mack sure getSecretWord doesn't make network call
  */
-jest.mock('../actions');
+jest.mock("../actions");
 
 /**
  * Creates wrapper with specified conditions,
@@ -25,83 +25,83 @@ const setup = (initialState = {}) => {
     </Provider>
   );
 
-  const input = findByTestAttr(wrapper, 'input');
-  input.simulate('change', { target: { value: 'train' } });
+  const input = findByTestAttr(wrapper, "input");
+  input.simulate("change", { target: { value: "train" } });
 
-  const submitBtn = findByTestAttr(wrapper, 'submit-btn');
-  submitBtn.simulate('click', { preventDefault: () => {} });
+  const submitBtn = findByTestAttr(wrapper, "submit-btn");
+  submitBtn.simulate("click", { preventDefault: () => {} });
 
   return wrapper;
 };
 
 // No words guessed in the table
-describe('no words guessed', () => {
+describe("no words guessed", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = setup({
-      secretWord: 'party',
+      secretWord: "party",
       success: false,
       guessedWords: [],
     });
   });
 
-  test('should create GuessedWords table with one row', () => {
-    const guessedWordsRows = findByTestAttr(wrapper, 'guessed-word');
+  test("should create GuessedWords table with one row", () => {
+    const guessedWordsRows = findByTestAttr(wrapper, "guessed-word");
     expect(guessedWordsRows).toHaveLength(1);
   });
 });
 
 // // Some words guessed in the table
-describe('some words guessed', () => {
+describe("some words guessed", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = setup({
-      secretWord: 'party',
+      secretWord: "party",
       success: false,
-      guessedWords: [{ guessedWord: 'agile', letterMatchCount: 1 }],
+      guessedWords: [{ guessedWord: "agile", letterMatchCount: 1 }],
     });
   });
 
-  test('should create GuessedWords table with one row', () => {
-    const guessedWordsRows = findByTestAttr(wrapper, 'guessed-word');
+  test("should create GuessedWords table with two rows", () => {
+    const guessedWordsRows = findByTestAttr(wrapper, "guessed-word");
     expect(guessedWordsRows).toHaveLength(2);
   });
 });
 
-describe('guess secret word', () => {
+describe("guess secret word", () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = setup({
-      secretWord: 'party',
+      secretWord: "party",
       success: false,
-      guessedWords: [{ guessedWord: 'agile', letterMatchCount: 1 }],
+      guessedWords: [{ guessedWord: "agile", letterMatchCount: 1 }],
     });
 
-    const input = findByTestAttr(wrapper, 'input');
-    input.simulate('change', { target: { value: 'party' } });
+    const input = findByTestAttr(wrapper, "input");
+    input.simulate("change", { target: { value: "party" } });
 
-    const submitBtn = findByTestAttr(wrapper, 'submit-btn');
-    submitBtn.simulate('click', { preventDefault: () => {} });
+    const submitBtn = findByTestAttr(wrapper, "submit-btn");
+    submitBtn.simulate("click", { preventDefault: () => {} });
   });
 
-  test('should add row to guessedWord table', () => {
-    const guessedWordsRows = findByTestAttr(wrapper, 'guessed-word');
+  test("should add row to guessedWord table", () => {
+    const guessedWordsRows = findByTestAttr(wrapper, "guessed-word");
     expect(guessedWordsRows).toHaveLength(3);
   });
 
-  test('should show congrats message', () => {
-    const congratsMessage = findByTestAttr(wrapper, 'congrats-message');
+  test("should show congrats message", () => {
+    const congratsMessage = findByTestAttr(wrapper, "congrats-message");
     expect(congratsMessage).toHaveLength(1);
   });
 
-  test('should not show input component content', () => {
-    const input = findByTestAttr(wrapper, 'input');
+  test("should not show input component content", () => {
+    const input = findByTestAttr(wrapper, "input");
     expect(input).toHaveLength(0);
 
-    const submitBtn = findByTestAttr(wrapper, 'input');
+    const submitBtn = findByTestAttr(wrapper, "submit-btn");
     expect(submitBtn).toHaveLength(0);
   });
 });

@@ -1,15 +1,16 @@
-import axios from 'axios';
-import { getLetterMatchCount } from '../helpers/index';
+import axios from "axios";
+import { getLetterMatchCount } from "../helpers/index";
 
 export const actionTypes = {
-  CORRECT_GUESS: 'CORRECT_GUESS',
-  GUESS_WORD: 'GUESS_WORD',
-  SET_SECRET_WORD: 'SET_SECRET_WORD',
-  RESET_GAME: 'RESET_GAME',
-  GIVE_UP: 'GIVE_UP',
+  CORRECT_GUESS: "CORRECT_GUESS",
+  GUESS_WORD: "GUESS_WORD",
+  SET_SECRET_WORD: "SET_SECRET_WORD",
+  RESET_GAME: "RESET_GAME",
+  GIVE_UP: "GIVE_UP",
   // SECRET_WORD_ENTERING: 'SECRET_WORD_ENTERING',
   // SECRET_WORD_ENTERED: 'SECRET_WORD_ENTERED',
-  ENTERING_SECRET_WORD: 'ENTERING_SECRET_WORD',
+  ENTERING_SECRET_WORD: "ENTERING_SECRET_WORD",
+  SERVER_ERROR: "SERVER_ERROR",
 };
 
 // action creators
@@ -46,17 +47,29 @@ export const setSecretWord = (secretWord) => {
 
 export const getSecretWord = () => {
   return async (dispatch) => {
-    const response = await axios.get('http://localhost:3030');
-    const secretWord = response.data;
-    dispatch(setSecretWord(secretWord));
+    try {
+      const response = await axios.get("http://localhost:3030");
+      const secretWord = response.data;
+      dispatch(setSecretWord(secretWord));
+      dispatch({ type: actionTypes.SERVER_ERROR, payload: null });
+    } catch (err) {
+      dispatch({ type: actionTypes.SERVER_ERROR, payload: err.message });
+    }
 
-    // return axios.get('http://localhost:3030').then((response) => {
-    //   const secretWord = response.data;
-    //   dispatch({
-    //     type: actionTypes.SET_SECRET_WORD,
-    //     payload: secretWord,
+    // Alternatively
+
+    // return axios
+    //   .get('http://localhost:3030')
+    //   .then((response) => {
+    //     const secretWord = response.data;
+    //     dispatch({
+    //       type: actionTypes.SET_SECRET_WORD,
+    //       payload: secretWord,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     dispatch({ type: actionTypes.SERVER_ERROR, payload: err.message });
     //   });
-    // });
   };
 };
 

@@ -1,5 +1,7 @@
-const GiveUpMessage = ({ gaveUp, secretWord }) => {
-  return gaveUp ? (
+import { PropTypes } from "prop-types";
+
+const GiveUpMessage = ({ display, secretWord }) => {
+  return display ? (
     <div data-test="component-giveup-message" className="alert alert-danger">
       <span data-test="giveup-message">
         The secret word was "{secretWord}". <br />
@@ -9,6 +11,11 @@ const GiveUpMessage = ({ gaveUp, secretWord }) => {
   ) : (
     <div data-test="component-giveup-message" />
   );
+};
+
+GiveUpMessage.propTypes = {
+  display: PropTypes.bool.isRequired,
+  secretWord: PropTypes.string,
 };
 
 export default GiveUpMessage;
