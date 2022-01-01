@@ -19,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -43,9 +44,18 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "check-prop-types": "^1.1.2",
     "enzyme": "^3.11.0",
-    "moxios": "^0.4.0"
+    "husky": "^7.0.0",
+    "lint-staged": "^12.1.4",
+    "moxios": "^0.4.0",
+    "prettier": "^2.5.1"
   },
   "jest": {
     "resetMocks": false
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "yarn eslint ./src --fix",
+      "yarn prettier --write"
+    ]
   }
 }
