@@ -1,10 +1,14 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import getStringByLanguage from "./helpers/strings";
+import { useLanguageContext } from "./contexts/LanguageContext";
 
 const Congrats = ({ success }) => {
+  const { language } = useLanguageContext();
+
   return success ? (
     <div data-test="component-congrats" className="alert alert-success">
       <span data-test="congrats-message">
-        Congratulations! You guessed the word!
+        {getStringByLanguage(language, "congrats")}
       </span>
     </div>
   ) : (
@@ -15,9 +19,5 @@ const Congrats = ({ success }) => {
 Congrats.propTypes = {
   success: PropTypes.bool.isRequired,
 };
-
-// Congrats.defaultProps = {
-//   success: false,
-// };
 
 export default Congrats;

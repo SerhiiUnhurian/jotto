@@ -1,6 +1,10 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { useLanguageContext } from "./contexts/LanguageContext";
+import getStringByLanguage from "./helpers/strings";
 
 const GuessedWords = ({ guessedWords }) => {
+  const { language } = useLanguageContext();
+
   const guessedWordsRows = guessedWords.map((guess, idx) => (
     <tr key={idx} data-test="guessed-word">
       <td>{guess.guessedWord}</td>
@@ -12,14 +16,16 @@ const GuessedWords = ({ guessedWords }) => {
     <div data-test="component-guessed-words">
       {guessedWords.length === 0 ? (
         <span data-test="instructions-message">
-          Try to guess the secret word!
+          {getStringByLanguage(language, "guessPrompt")}
         </span>
       ) : (
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
-              <th>Guess</th>
-              <th>Letters match</th>
+              <th>{getStringByLanguage(language, "guessColumnHeader")}</th>
+              <th>
+                {getStringByLanguage(language, "matchingLettersColumnHeader")}
+              </th>
             </tr>
           </thead>
           <tbody>{guessedWordsRows}</tbody>

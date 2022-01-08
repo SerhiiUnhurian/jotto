@@ -1,8 +1,11 @@
-import { PropTypes } from 'prop-types';
-import React, { useState } from 'react';
+import { PropTypes } from "prop-types";
+import React, { useState } from "react";
+import { useLanguageContext } from "./contexts/LanguageContext";
+import getStringByLanguage from "./helpers/strings";
 
-const Input = ({ success, secretWord }) => {
-  const [guessWord, setGuessWord] = useState('');
+const Input = ({ success, onSubmit }) => {
+  const [guessWord, setGuessWord] = useState("");
+  const { language } = useLanguageContext();
 
   const handleGuessChange = ({ target }) => {
     setGuessWord(target.value);
@@ -10,9 +13,8 @@ const Input = ({ success, secretWord }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //TODO: Update guessedWords global state
-    //TODO: check against secretWord and optionally update success global state
-    setGuessWord('');
+    onSubmit(guessWord);
+    setGuessWord("");
   };
 
   if (success) {
@@ -28,14 +30,14 @@ const Input = ({ success, secretWord }) => {
           className="mb-2 mx-sm-3"
           data-test="input"
           type="text"
-          placeholder="enter guess"
+          placeholder={getStringByLanguage(language, "guessInputPlaceholder")}
         />
         <button
           onClick={handleSubmit}
           data-test="submit-btn"
           className="btn btn-primary mb-2"
         >
-          Submit
+          {getStringByLanguage(language, "submit")}
         </button>
       </form>
     </div>
@@ -43,11 +45,7 @@ const Input = ({ success, secretWord }) => {
 };
 
 Input.propTypes = {
-  secretWord: PropTypes.string.isRequired,
-};
-
-Input.defaultProps = {
-  secretWord: '',
+  success: PropTypes.bool.isRequired,
 };
 
 export default Input;

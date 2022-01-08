@@ -1,27 +1,25 @@
-import moxios from 'moxios';
-import { getSecretWord } from './index';
+import moxios from "moxios";
+import { getSecretWord } from "./index";
 
-beforeEach(() => {
-  moxios.install();
-});
+describe.skip("getSecretWord", () => {
+  beforeEach(() => {
+    moxios.install();
+  });
 
-afterEach(() => {
-  moxios.uninstall();
-});
+  afterEach(() => {
+    moxios.uninstall();
+  });
 
-describe('getSecretWord', () => {
-  test('should return secret word', () => {
+  test("should return secret word", async () => {
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({
         status: 200,
-        response: 'party',
+        response: "party",
       });
     });
 
-    // TODO: Update to test App in Redux / Context sections
-    return getSecretWord().then((secretWord) => {
-      expect(secretWord).toBe('party');
-    });
+    const secretWord = await getSecretWord();
+    expect(secretWord).toBe("party");
   });
 });
