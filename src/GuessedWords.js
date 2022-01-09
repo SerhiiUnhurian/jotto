@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
+import { useGuessedWordsContext } from "./contexts/GuessedWordsContext";
 import { useLanguageContext } from "./contexts/LanguageContext";
 import getStringByLanguage from "./helpers/strings";
 
-const GuessedWords = ({ guessedWords }) => {
+const GuessedWords = () => {
   const { language } = useLanguageContext();
+  const [guessedWords] = useGuessedWordsContext();
 
   const guessedWordsRows = guessedWords.map((guess, idx) => (
     <tr key={idx} data-test="guessed-word">
@@ -42,10 +44,6 @@ GuessedWords.propTypes = {
       letterMatchCount: PropTypes.number.isRequired,
     })
   ),
-};
-
-GuessedWords.defaultProps = {
-  guessedWords: [],
 };
 
 export default GuessedWords;

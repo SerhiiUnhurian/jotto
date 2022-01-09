@@ -1,9 +1,9 @@
-import { mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import App from "./App";
 import { findByTestAttr } from "../test/testUtils";
 import React from "react";
-import * as LanguageContext from "./contexts/LanguageContext";
 import { getSecretWord as mockGetSecretWord } from "./actions";
+
 /**
  * Activate global mock to mack sure getSecretWord doesn't make network call
  */

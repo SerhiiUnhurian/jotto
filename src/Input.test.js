@@ -4,19 +4,25 @@ import { findByTestAttr } from "../test/testUtils";
 import { checkProps } from "../test/testUtils";
 import React from "react";
 import getStringByLanguage from "./helpers/strings";
+import { SuccessProvider } from "./contexts/SuccessContext";
 import LanguageContext from "./contexts/LanguageContext";
+import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
 
 const mockSetGuess = jest.fn();
 
-jest.mock("react", () => ({
-  ...jest.requireActual("react"),
-  useState: (initialState) => [initialState, mockSetGuess],
-}));
+// jest.mock('react', () => ({
+//   ...jest.requireActual('react'),
+//   useState: (initialState) => [initialState, mockSetGuess],
+// }));
 
 const setup = ({ success = false, language = "en" } = {}) => {
   return mount(
     <LanguageContext.Provider value={{ language }}>
-      <Input success={success} />
+      <SuccessProvider value={[success, jest.fn()]}>
+        <GuessedWordsProvider>
+          <Input secretWord="party" />
+        </GuessedWordsProvider>
+      </SuccessProvider>
     </LanguageContext.Provider>
   );
 };
@@ -29,7 +35,7 @@ describe("<Input />", () => {
   });
 
   test("should not throw warning with expected props", () => {
-    checkProps(Input, { success: false });
+    checkProps(Input, { secretWord: "party" });
   });
 
   describe("input field", () => {
@@ -41,20 +47,25 @@ describe("<Input />", () => {
     });
 
     test("should update input state upon change", () => {
-      const mockEvent = { target: { value: "party" } };
-      const input = findByTestAttr(wrapper, "input");
-      input.simulate("change", mockEvent);
-      expect(mockSetGuess).toHaveBeenCalledWith("party");
+      findByTestAttr(wrapper, "input").simulate("change", {
+        target: { value: "party" },
+      });
+      expect(findByTestAttr(wrapper, "input").at(0).prop("value")).toEqual(
+        "party"
+      );
     });
 
     test("should clear input state upon submit", () => {
+      findByTestAttr(wrapper, "input").simulate("change", {
+        target: { value: "party" },
+      });
       const submitBtn = findByTestAttr(wrapper, "submit-btn");
       submitBtn.simulate("click", { preventDefault: () => {} });
-      expect(mockSetGuess).toHaveBeenCalledWith("");
+      expect(findByTestAttr(wrapper, "input").at(0).prop("value")).toEqual("");
     });
   });
 
-  describe("success prop is true", () => {
+  describe("success is true", () => {
     test("should not render input", () => {
       const wrapper = setup({ success: true });
       const input = findByTestAttr(wrapper, "input");
@@ -68,7 +79,7 @@ describe("<Input />", () => {
     });
   });
 
-  describe("success prop is false", () => {
+  describe("success is false", () => {
     test("should render input", () => {
       const wrapper = setup({ success: false });
       const input = findByTestAttr(wrapper, "input");

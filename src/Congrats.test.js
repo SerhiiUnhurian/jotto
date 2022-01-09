@@ -1,16 +1,17 @@
 import { mount } from "enzyme";
 import Congrats from "./Congrats";
 import { findByTestAttr } from "../test/testUtils";
-import { checkProps } from "../test/testUtils";
 import LanguageContext from "./contexts/LanguageContext";
 import getStringByLanguage from "./helpers/strings";
-
-const defaultProps = { success: false };
+import { SuccessProvider } from "./contexts/SuccessContext";
+// import * as SuccessContext from './contexts/SuccessContext';
 
 const setup = ({ language = "en", success = true } = {}) => {
   return mount(
     <LanguageContext.Provider value={{ language }}>
-      <Congrats success={success} />
+      <SuccessProvider value={[success, () => {}]}>
+        <Congrats />
+      </SuccessProvider>
     </LanguageContext.Provider>
   );
 };
@@ -32,10 +33,6 @@ describe("<Congrats />", () => {
     const wrapper = setup({ success: true });
     const message = findByTestAttr(wrapper, "congrats-message");
     expect(message.text().length).not.toBe(0);
-  });
-
-  test("should not throw warning with expected props", () => {
-    checkProps(Congrats, defaultProps);
   });
 
   describe("languageContext", () => {

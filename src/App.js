@@ -8,13 +8,12 @@ import React from "react";
 import Spinner from "./Spinner";
 import LanguageContext from "./contexts/LanguageContext";
 import LanguagePicker from "./LanguagePicker";
-import { getLetterMatchCount } from "./helpers";
+import { SuccessProvider } from "./contexts/SuccessContext";
+import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
 
 const initialState = {
   language: "en",
   secretWord: null,
-  success: false,
-  guessedWords: [],
 };
 
 const reducer = (state, action) => {
@@ -23,17 +22,17 @@ const reducer = (state, action) => {
       return { ...state, secretWord: action.payload };
     case "SET_LANGUAGE":
       return { ...state, language: action.payload };
-    case "GUESS_WORD":
-      const success = action.payload === state.secretWord;
-      const guessedWord = {
-        guessedWord: action.payload,
-        letterMatchCount: getLetterMatchCount(action.payload, state.secretWord),
-      };
-      return {
-        ...state,
-        success,
-        guessedWords: [...state.guessedWords, guessedWord],
-      };
+    // case 'GUESS_WORD':
+    //   const success = action.payload === state.secretWord;
+    //   const guessedWord = {
+    //     guessedWord: action.payload,
+    //     letterMatchCount: getLetterMatchCount(action.payload, state.secretWord),
+    //   };
+    //   return {
+    //     ...state,
+    //     success,
+    //     guessedWords: [...state.guessedWords, guessedWord],
+    //   };
     default:
       throw new Error(`Invalid action type: ${action.type}`);
   }
@@ -50,19 +49,15 @@ function App() {
     dispatch({ type: "SET_LANGUAGE", payload: language });
   };
 
-  const guessWord = (word) => {
-    dispatch({ type: "GUESS_WORD", payload: word });
-  };
-
   useEffect(() => {
-    // async function fetchSecretWord() {
-    //   const secretWord = await getSecretWord();
-    //   setSecretWord(secretWord);
-    // }
-    // fetchSecretWord();
+    async function fetchSecretWord() {
+      const secretWord = await getSecretWord();
+      setSecretWord(secretWord);
+    }
+    fetchSecretWord();
 
+    // alternatively
     // getSecretWord().then((secretWord) => setSecretWord(secretWord));
-    getSecretWord(setSecretWord);
   }, []);
 
   if (!state.secretWord) {
@@ -74,13 +69,13 @@ function App() {
       <h1>Jotto</h1>
       <LanguageContext.Provider value={{ language: state.language }}>
         <LanguagePicker setLanguage={setLanguage} />
-        <Congrats success={state.success} />
-        <Input
-          secretWord={state.secretWord}
-          success={state.success}
-          onSubmit={guessWord}
-        />
-        <GuessedWords guessedWords={state.guessedWords} />
+        <GuessedWordsProvider>
+          <SuccessProvider>
+            <Congrats />
+            <Input secretWord={state.secretWord} />
+          </SuccessProvider>
+          <GuessedWords />
+        </GuessedWordsProvider>
       </LanguageContext.Provider>
     </div>
   );

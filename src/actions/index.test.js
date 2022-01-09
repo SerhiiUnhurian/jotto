@@ -1,7 +1,7 @@
 import moxios from "moxios";
 import { getSecretWord } from "./index";
 
-describe.skip("getSecretWord", () => {
+describe("getSecretWord", () => {
   beforeEach(() => {
     moxios.install();
   });

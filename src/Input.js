@@ -1,11 +1,16 @@
-import { PropTypes } from "prop-types";
 import React, { useState } from "react";
+import { useGuessedWordsContext } from "./contexts/GuessedWordsContext";
 import { useLanguageContext } from "./contexts/LanguageContext";
+import { useSuccessContext } from "./contexts/SuccessContext";
 import getStringByLanguage from "./helpers/strings";
+import { getLetterMatchCount } from "./helpers/index";
+import { PropTypes } from "prop-types";
 
-const Input = ({ success, onSubmit }) => {
+const Input = ({ secretWord }) => {
   const [guessWord, setGuessWord] = useState("");
   const { language } = useLanguageContext();
+  const [success, setSuccess] = useSuccessContext();
+  const [guessedWords, setGuessedWords] = useGuessedWordsContext();
 
   const handleGuessChange = ({ target }) => {
     setGuessWord(target.value);
@@ -13,7 +18,19 @@ const Input = ({ success, onSubmit }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(guessWord);
+    const guess = guessWord.trim();
+
+    if (!guess) return;
+    if (guess === secretWord) {
+      setSuccess(true);
+    }
+    setGuessedWords([
+      ...guessedWords,
+      {
+        guessedWord: guess,
+        letterMatchCount: getLetterMatchCount(guess, secretWord),
+      },
+    ]);
     setGuessWord("");
   };
 
@@ -27,7 +44,7 @@ const Input = ({ success, onSubmit }) => {
         <input
           onChange={handleGuessChange}
           value={guessWord}
-          className="mb-2 mx-sm-3"
+          className="mb-2 mr-3"
           data-test="input"
           type="text"
           placeholder={getStringByLanguage(language, "guessInputPlaceholder")}
@@ -36,6 +53,7 @@ const Input = ({ success, onSubmit }) => {
           onClick={handleSubmit}
           data-test="submit-btn"
           className="btn btn-primary mb-2"
+          disabled={!guessWord.trim()}
         >
           {getStringByLanguage(language, "submit")}
         </button>
@@ -45,7 +63,7 @@ const Input = ({ success, onSubmit }) => {
 };
 
 Input.propTypes = {
-  success: PropTypes.bool.isRequired,
+  secretWord: PropTypes.string.isRequired,
 };
 
 export default Input;
