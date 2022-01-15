@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useGuessedWordsContext } from "./contexts/GuessedWordsContext";
-import { useLanguageContext } from "./contexts/LanguageContext";
-import { useSuccessContext } from "./contexts/SuccessContext";
-import getStringByLanguage from "./helpers/strings";
-import { getLetterMatchCount } from "./helpers/index";
 import { PropTypes } from "prop-types";
+import React, { useState } from "react";
+import { useGuessedWordsContext } from "../contexts/GuessedWordsContext";
+import { useLanguageContext } from "../contexts/LanguageContext";
+import { useSuccessContext } from "../contexts/SuccessContext";
+import { getLetterMatchCount } from "../helpers/index";
+import getStringByLanguage from "../helpers/strings";
 
 const Input = ({ secretWord }) => {
   const [guessWord, setGuessWord] = useState("");

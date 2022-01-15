@@ -1,6 +1,6 @@
-import getStringByLanguage from "./helpers/strings";
-import { useLanguageContext } from "./contexts/LanguageContext";
-import { useSuccessContext } from "./contexts/SuccessContext";
+import getStringByLanguage from "../helpers/strings";
+import { useLanguageContext } from "../contexts/LanguageContext";
+import { useSuccessContext } from "../contexts/SuccessContext";
 
 const Congrats = () => {
   const { language } = useLanguageContext();

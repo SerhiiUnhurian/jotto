@@ -6,8 +6,10 @@ export const languageStrings = {
     guessPrompt: "Try to guess the secret word!",
     guessInputPlaceholder: "enter guess",
     guessedWords: "Guesses",
+    numberColumnHeader: "№",
     guessColumnHeader: "Guessed Words",
     matchingLettersColumnHeader: "Matching Letters",
+    totalGuesses: "Total Guesses",
   },
   emoji: {
     icon: "😊 emoji",
@@ -16,8 +18,10 @@ export const languageStrings = {
     guessPrompt: "🤔🤫🔤",
     guessInputPlaceholder: "⌨️🤔",
     guessedWords: "🤷‍🔤",
+    numberColumnHeader: "🔢",
     guessColumnHeader: "🤷‍",
     matchingLettersColumnHeader: "✅",
+    totalGuesses: "🔢🤷‍♀️",
   },
 };
 

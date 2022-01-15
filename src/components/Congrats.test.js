@@ -1,9 +1,9 @@
 import { mount } from "enzyme";
 import Congrats from "./Congrats";
-import { findByTestAttr } from "../test/testUtils";
-import LanguageContext from "./contexts/LanguageContext";
-import getStringByLanguage from "./helpers/strings";
-import { SuccessProvider } from "./contexts/SuccessContext";
+import { findByTestAttr } from "../../test/testUtils";
+import LanguageContext from "../contexts/LanguageContext";
+import getStringByLanguage from "../helpers/strings";
+import { SuccessProvider } from "../contexts/SuccessContext";
 // import * as SuccessContext from './contexts/SuccessContext';
 
 const setup = ({ language = "en", success = true } = {}) => {

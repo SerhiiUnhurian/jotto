@@ -1,9 +1,9 @@
 import { shallow } from "enzyme";
-import { findByTestAttr } from "../test/testUtils";
+import { findByTestAttr } from "../../test/testUtils";
 import GuessedWords from "./GuessedWords";
-import getStringByLanguage from "./helpers/strings";
-import * as LanguageContext from "./contexts/LanguageContext";
-import * as GuessedWordsContext from "./contexts/GuessedWordsContext";
+import getStringByLanguage from "../helpers/strings";
+import * as LanguageContext from "../contexts/LanguageContext";
+import * as GuessedWordsContext from "../contexts/GuessedWordsContext";
 
 const setup = (guessedWords = []) => {
   GuessedWordsContext.useGuessedWordsContext = jest
@@ -26,7 +26,7 @@ describe("<GuessedWords />", () => {
       expect(component.length).toBe(1);
     });
 
-    test("should render instructions without error", () => {
+    test("should render instructions", () => {
       const component = findByTestAttr(wrapper, "instructions-message");
       expect(component.text().length).not.toBe(0);
     });
@@ -49,9 +49,28 @@ describe("<GuessedWords />", () => {
       expect(component.length).toBe(1);
     });
 
-    test("should render guessed words without error", () => {
+    test("should not render instructions", () => {
+      const component = findByTestAttr(wrapper, "instructions-message");
+      expect(component).toHaveLength(0);
+    });
+
+    test("should render guessed words", () => {
       const guessedWordNodes = findByTestAttr(wrapper, "guessed-word");
       expect(guessedWordNodes.length).toBe(guessedWords.length);
+      guessedWordNodes.forEach((node, i) => {
+        const text = node.text();
+        const { guessedWord, letterMatchCount } = guessedWords[i];
+        const wordCount = i + 1;
+
+        expect(text).toContain(guessedWord);
+        expect(text).toContain(letterMatchCount);
+        expect(text).toContain(wordCount);
+      });
+    });
+
+    test("should render total number of guesses", () => {
+      const guessedWordNodes = findByTestAttr(wrapper, "total-guesses");
+      expect(guessedWordNodes.text()).toContain(guessedWords.length);
     });
   });
 

@@ -1,12 +1,10 @@
 import { mount } from "enzyme";
 import Input from "./Input";
-import { findByTestAttr } from "../test/testUtils";
-import { checkProps } from "../test/testUtils";
-import React from "react";
-import getStringByLanguage from "./helpers/strings";
-import { SuccessProvider } from "./contexts/SuccessContext";
-import LanguageContext from "./contexts/LanguageContext";
-import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
+import { findByTestAttr, checkProps } from "../../test/testUtils";
+import getStringByLanguage from "../helpers/strings";
+import { SuccessProvider } from "../contexts/SuccessContext";
+import LanguageContext from "../contexts/LanguageContext";
+import { GuessedWordsProvider } from "../contexts/GuessedWordsContext";
 
 const mockSetGuess = jest.fn();
 

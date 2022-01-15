@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
-import { languageStrings } from "./helpers/strings";
-import { useLanguageContext } from "./contexts/LanguageContext";
+import { languageStrings } from "../helpers/strings";
+import { useLanguageContext } from "../contexts/LanguageContext";
 
 const LanguagePicker = ({ setLanguage }) => {
   const { language: currentLanguage } = useLanguageContext();

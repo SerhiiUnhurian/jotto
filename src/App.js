@@ -1,15 +1,14 @@
-import Congrats from "./Congrats";
-import GuessedWords from "./GuessedWords";
-import "./App.css";
-import Input from "./Input";
 import { useEffect, useReducer } from "react";
 import { getSecretWord } from "./actions/index";
-import React from "react";
-import Spinner from "./Spinner";
-import LanguageContext from "./contexts/LanguageContext";
-import LanguagePicker from "./LanguagePicker";
-import { SuccessProvider } from "./contexts/SuccessContext";
+import "./App.css";
+import Congrats from "./components/Congrats";
+import GuessedWords from "./components/GuessedWords";
+import Input from "./components/Input";
+import LanguagePicker from "./components/LanguagePicker";
+import Spinner from "./components/Spinner";
 import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
+import LanguageContext from "./contexts/LanguageContext";
+import { SuccessProvider } from "./contexts/SuccessContext";
 
 const initialState = {
   language: "en",

@@ -1,11 +1,10 @@
 import { mount } from "enzyme";
-import App from "./App";
 import { findByTestAttr } from "../test/testUtils";
 import { SuccessProvider } from "./contexts/SuccessContext";
 import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
-import Congrats from "./Congrats";
-import GuessedWords from "./GuessedWords";
-import Input from "./Input";
+import Congrats from "./components/Congrats";
+import GuessedWords from "./components/GuessedWords";
+import Input from "./components/Input";
 
 /**
  * Functional tests for App components
