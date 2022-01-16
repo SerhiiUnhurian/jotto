@@ -23,10 +23,10 @@ describe("<Congrats />", () => {
     expect(component.length).toBe(1);
   });
 
-  test("should not render congrats message", () => {
+  test("should not render component", () => {
     const wrapper = setup({ success: false });
     const component = findByTestAttr(wrapper, "component-congrats");
-    expect(component.text()).toBe("");
+    expect(component).toHaveLength(0);
   });
 
   test("should render congrats message", () => {

@@ -9,6 +9,7 @@ import Spinner from "./components/Spinner";
 import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
 import LanguageContext from "./contexts/LanguageContext";
 import { SuccessProvider } from "./contexts/SuccessContext";
+import NewWordButton from "./components/NewWordButton";
 
 const initialState = {
   language: "en",
@@ -48,11 +49,12 @@ function App() {
     dispatch({ type: "SET_LANGUAGE", payload: language });
   };
 
+  const fetchSecretWord = async () => {
+    const secretWord = await getSecretWord();
+    setSecretWord(secretWord);
+  };
+
   useEffect(() => {
-    async function fetchSecretWord() {
-      const secretWord = await getSecretWord();
-      setSecretWord(secretWord);
-    }
     fetchSecretWord();
 
     // alternatively
@@ -71,6 +73,7 @@ function App() {
         <GuessedWordsProvider>
           <SuccessProvider>
             <Congrats />
+            <NewWordButton onClick={fetchSecretWord} />
             <Input secretWord={state.secretWord} />
           </SuccessProvider>
           <GuessedWords />

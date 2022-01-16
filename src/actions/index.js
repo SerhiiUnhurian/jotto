@@ -5,7 +5,7 @@ import axios from "axios";
 //   return response.data;
 // };
 
-export const getSecretWord = async () => {
+export const getSecretWord = async (setSecretWord) => {
   const response = await axios.get("http://localhost:3030");
   return response.data;
 };

@@ -6,13 +6,6 @@ import { SuccessProvider } from "../contexts/SuccessContext";
 import LanguageContext from "../contexts/LanguageContext";
 import { GuessedWordsProvider } from "../contexts/GuessedWordsContext";
 
-const mockSetGuess = jest.fn();
-
-// jest.mock('react', () => ({
-//   ...jest.requireActual('react'),
-//   useState: (initialState) => [initialState, mockSetGuess],
-// }));
-
 const setup = ({ success = false, language = "en" } = {}) => {
   return mount(
     <LanguageContext.Provider value={{ language }}>
@@ -40,7 +33,6 @@ describe("<Input />", () => {
     let wrapper;
 
     beforeEach(() => {
-      mockSetGuess.mockClear();
       wrapper = setup();
     });
 

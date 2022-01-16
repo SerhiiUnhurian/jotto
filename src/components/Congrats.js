@@ -12,9 +12,7 @@ const Congrats = () => {
         {getStringByLanguage(language, "congrats")}
       </span>
     </div>
-  ) : (
-    <div data-test="component-congrats" />
-  );
+  ) : null;
 };
 
 export default Congrats;
