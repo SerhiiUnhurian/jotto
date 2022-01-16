@@ -5,6 +5,7 @@ import { GuessedWordsProvider } from "../contexts/GuessedWordsContext";
 import Congrats from "../components/Congrats";
 import GuessedWords from "../components/GuessedWords";
 import Input from "../components/Input";
+import NewWordButton from "../components/NewWordButton";
 
 /**
  * Functional tests for App components
@@ -21,7 +22,8 @@ const setup = ({ secretWord, guessedWords }) => {
     <SuccessProvider>
       <GuessedWordsProvider>
         <Congrats />
-        <Input secretWord={secretWord} />
+        <NewWordButton onClick={() => {}} />
+        <Input secretWord={secretWord} onGiveUp={() => {}} />
         <GuessedWords />
       </GuessedWordsProvider>
     </SuccessProvider>
@@ -95,17 +97,20 @@ describe("guess a word", () => {
       expect(guessedWordsRows).toHaveLength(3);
     });
 
-    test("should show congrats message", () => {
-      const congratsMessage = findByTestAttr(wrapper, "congrats-message");
-      expect(congratsMessage).toHaveLength(1);
+    test("should render <Congrats />", () => {
+      const congrats = findByTestAttr(wrapper, "component-congrats");
+      expect(congrats).toHaveLength(1);
     });
 
-    test("should not show input component content", () => {
-      const input = findByTestAttr(wrapper, "input");
-      expect(input).toHaveLength(0);
+    test("should render <NewWordButton />", () => {
+      console.log(wrapper.debug());
+      const newWordBtn = findByTestAttr(wrapper, "component-new-word-btn");
+      expect(newWordBtn).toHaveLength(1);
+    });
 
-      const submitBtn = findByTestAttr(wrapper, "input");
-      expect(submitBtn).toHaveLength(0);
+    test("should not render <Input />", () => {
+      const input = findByTestAttr(wrapper, "component-input");
+      expect(input).toHaveLength(0);
     });
   });
 });

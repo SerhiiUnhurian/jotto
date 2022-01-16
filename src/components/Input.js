@@ -6,7 +6,7 @@ import { useSuccessContext } from "../contexts/SuccessContext";
 import { getLetterMatchCount } from "../helpers/index";
 import getStringByLanguage from "../helpers/strings";
 
-const Input = ({ secretWord }) => {
+const Input = ({ secretWord, onGiveUp }) => {
   const [guessWord, setGuessWord] = useState("");
   const { language } = useLanguageContext();
   const [success, setSuccess] = useSuccessContext();
@@ -34,8 +34,15 @@ const Input = ({ secretWord }) => {
     setGuessWord("");
   };
 
+  const handleGiveUp = (event) => {
+    event.preventDefault();
+
+    setSuccess(true);
+    onGiveUp(true);
+  };
+
   if (success) {
-    return <div data-test="component-input" />;
+    return null;
   }
 
   return (
@@ -57,6 +64,15 @@ const Input = ({ secretWord }) => {
         >
           {getStringByLanguage(language, "submit")}
         </button>
+        {!!guessedWords.length && (
+          <button
+            onClick={handleGiveUp}
+            data-test="giveup-btn"
+            className="btn btn-danger mb-2 ml-2"
+          >
+            {getStringByLanguage(language, "giveUp")}
+          </button>
+        )}
       </form>
     </div>
   );
@@ -64,6 +80,7 @@ const Input = ({ secretWord }) => {
 
 Input.propTypes = {
   secretWord: PropTypes.string.isRequired,
+  onGiveUp: PropTypes.func.isRequired,
 };
 
 export default Input;

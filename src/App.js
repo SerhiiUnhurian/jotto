@@ -10,10 +10,12 @@ import { GuessedWordsProvider } from "./contexts/GuessedWordsContext";
 import LanguageContext from "./contexts/LanguageContext";
 import { SuccessProvider } from "./contexts/SuccessContext";
 import NewWordButton from "./components/NewWordButton";
+import GiveUpMessage from "./components/GiveUpMessage";
 
 const initialState = {
   language: "en",
   secretWord: null,
+  giveUp: false,
 };
 
 const reducer = (state, action) => {
@@ -22,6 +24,8 @@ const reducer = (state, action) => {
       return { ...state, secretWord: action.payload };
     case "SET_LANGUAGE":
       return { ...state, language: action.payload };
+    case "SET_GIVE_UP":
+      return { ...state, giveUp: action.payload };
     // case 'GUESS_WORD':
     //   const success = action.payload === state.secretWord;
     //   const guessedWord = {
@@ -49,6 +53,15 @@ function App() {
     dispatch({ type: "SET_LANGUAGE", payload: language });
   };
 
+  const setGiveUp = (giveUp) => {
+    dispatch({ type: "SET_GIVE_UP", payload: giveUp });
+  };
+
+  const resetGame = () => {
+    setGiveUp(false);
+    fetchSecretWord();
+  };
+
   const fetchSecretWord = async () => {
     const secretWord = await getSecretWord();
     setSecretWord(secretWord);
@@ -72,9 +85,13 @@ function App() {
         <LanguagePicker setLanguage={setLanguage} />
         <GuessedWordsProvider>
           <SuccessProvider>
-            <Congrats />
-            <NewWordButton onClick={fetchSecretWord} />
-            <Input secretWord={state.secretWord} />
+            {state.giveUp ? (
+              <GiveUpMessage secretWord={state.secretWord} />
+            ) : (
+              <Congrats />
+            )}
+            <NewWordButton onClick={resetGame} />
+            <Input secretWord={state.secretWord} onGiveUp={setGiveUp} />
           </SuccessProvider>
           <GuessedWords />
         </GuessedWordsProvider>

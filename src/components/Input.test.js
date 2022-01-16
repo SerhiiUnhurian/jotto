@@ -6,12 +6,16 @@ import { SuccessProvider } from "../contexts/SuccessContext";
 import LanguageContext from "../contexts/LanguageContext";
 import { GuessedWordsProvider } from "../contexts/GuessedWordsContext";
 
-const setup = ({ success = false, language = "en" } = {}) => {
+const setup = ({
+  success = false,
+  language = "en",
+  guessedWords = [],
+} = {}) => {
   return mount(
     <LanguageContext.Provider value={{ language }}>
       <SuccessProvider value={[success, jest.fn()]}>
-        <GuessedWordsProvider>
-          <Input secretWord="party" />
+        <GuessedWordsProvider value={[guessedWords, jest.fn()]}>
+          <Input secretWord="party" onGiveUp={jest.fn()} />
         </GuessedWordsProvider>
       </SuccessProvider>
     </LanguageContext.Provider>
@@ -26,7 +30,7 @@ describe("<Input />", () => {
   });
 
   test("should not throw warning with expected props", () => {
-    checkProps(Input, { secretWord: "party" });
+    checkProps(Input, { secretWord: "party", onGiveUp: () => {} });
   });
 
   describe("input field", () => {
@@ -56,16 +60,10 @@ describe("<Input />", () => {
   });
 
   describe("success is true", () => {
-    test("should not render input", () => {
+    test("should not render component", () => {
       const wrapper = setup({ success: true });
-      const input = findByTestAttr(wrapper, "input");
-      expect(input.exists()).toBe(false);
-    });
-
-    test("should not render submit button", () => {
-      const wrapper = setup({ success: true });
-      const submitBtn = findByTestAttr(wrapper, "submit-btn");
-      expect(submitBtn.exists()).toBe(false);
+      const input = findByTestAttr(wrapper, "component-input");
+      expect(input).toHaveLength(0);
     });
   });
 
@@ -80,6 +78,21 @@ describe("<Input />", () => {
       const wrapper = setup({ success: false });
       const submitBtn = findByTestAttr(wrapper, "submit-btn");
       expect(submitBtn.exists()).toBe(true);
+    });
+
+    test("should not render give up button", () => {
+      const wrapper = setup({ success: false });
+      const button = findByTestAttr(wrapper, "giveup-btn");
+      expect(button).toHaveLength(0);
+    });
+
+    test("should render give up button", () => {
+      const wrapper = setup({
+        success: false,
+        guessedWords: [{ guessedWord: "agile", letterMatchCount: 1 }],
+      });
+      const button = findByTestAttr(wrapper, "giveup-btn");
+      expect(button).toHaveLength(1);
     });
   });
 

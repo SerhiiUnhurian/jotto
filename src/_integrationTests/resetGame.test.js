@@ -16,7 +16,6 @@ const setup = () => {
   const newWordButton = findByTestAttr(wrapper, "component-new-word-btn");
   newWordButton.simulate("click");
 
-  console.log(wrapper.debug());
   return wrapper;
 };
 
@@ -27,17 +26,17 @@ describe("reset the game", () => {
     wrapper = setup();
   });
 
-  it("should not show <NewWordButton />", () => {
+  it("should not render <NewWordButton />", () => {
     const input = findByTestAttr(wrapper, "component-new-word-btn");
     expect(input).toHaveLength(0);
   });
 
-  it("should not show <Congrats />", () => {
+  it("should not render <Congrats />", () => {
     const input = findByTestAttr(wrapper, "component-congrats");
     expect(input).toHaveLength(0);
   });
 
-  it("should show <Input />", () => {
+  it("should render <Input />", () => {
     const input = findByTestAttr(wrapper, "component-input");
     expect(input).toHaveLength(1);
   });
