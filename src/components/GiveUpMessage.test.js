@@ -15,12 +15,6 @@ describe("<GiveUpMessage />", () => {
     expect(component.length).toBe(1);
   });
 
-  // test('should not render give up message', () => {
-  //   const wrapper = setup();
-  //   const component = findByTestAttr(wrapper, 'giveup-message');
-  //   expect(component.length).toBe(0);
-  // });
-
   test("should render give up message with secret word", () => {
     const wrapper = setup();
     const component = findByTestAttr(wrapper, "giveup-message");

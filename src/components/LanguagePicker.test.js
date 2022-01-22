@@ -3,6 +3,7 @@ import { checkProps, findByTestAttr } from "../../test/testUtils";
 import LanguagePicker from "./LanguagePicker";
 
 const mockSetLanguage = jest.fn();
+
 const setup = () => {
   return shallow(<LanguagePicker setLanguage={mockSetLanguage} />);
 };

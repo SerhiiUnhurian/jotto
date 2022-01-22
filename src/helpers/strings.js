@@ -3,6 +3,7 @@ export const languageStrings = {
     icon: "🇺🇸 en",
     congrats: "Congratulations! You guessed the word!",
     submit: "Submit",
+    cancel: "Cancel",
     newWord: "New Word",
     giveUp: "Give Up",
     guessPrompt: "Try to guess the secret word!",
@@ -12,11 +13,13 @@ export const languageStrings = {
     guessColumnHeader: "Guessed Words",
     matchingLettersColumnHeader: "Matching Letters",
     totalGuesses: "Total Guesses",
+    enterSecretWord: "Enter your own secret word",
   },
   emoji: {
     icon: "😊 emoji",
     congrats: "🎯🎉",
     submit: "🚀",
+    cancel: "✖️",
     newWord: "✨🔤",
     giveUp: "😩",
     guessPrompt: "🤔🤫🔤",
@@ -26,6 +29,7 @@ export const languageStrings = {
     guessColumnHeader: "🤷‍",
     matchingLettersColumnHeader: "✅",
     totalGuesses: "🔢🤷‍♀️",
+    enterSecretWord: "👩‍💻🤫🔤",
   },
 };
 

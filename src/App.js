@@ -11,11 +11,14 @@ import LanguageContext from "./contexts/LanguageContext";
 import { SuccessProvider } from "./contexts/SuccessContext";
 import NewWordButton from "./components/NewWordButton";
 import GiveUpMessage from "./components/GiveUpMessage";
+import EnterSecretWordButton from "./components/EnterSecretWordButton";
+import EnterSecretWordForm from "./components/EnterSecretWordForm";
 
 const initialState = {
   language: "en",
   secretWord: null,
   giveUp: false,
+  enterSecretWord: false,
 };
 
 const reducer = (state, action) => {
@@ -26,6 +29,8 @@ const reducer = (state, action) => {
       return { ...state, language: action.payload };
     case "SET_GIVE_UP":
       return { ...state, giveUp: action.payload };
+    case "SET_ENTER_SECRET_WORD":
+      return { ...state, enterSecretWord: action.payload };
     // case 'GUESS_WORD':
     //   const success = action.payload === state.secretWord;
     //   const guessedWord = {
@@ -47,6 +52,7 @@ function App() {
 
   const setSecretWord = (secretWord) => {
     dispatch({ type: "SET_SECRET_WORD", payload: secretWord });
+    setEnterSecretWord(false);
   };
 
   const setLanguage = (language) => {
@@ -57,14 +63,18 @@ function App() {
     dispatch({ type: "SET_GIVE_UP", payload: giveUp });
   };
 
+  const setEnterSecretWord = (enterSecretWord) => {
+    dispatch({ type: "SET_ENTER_SECRET_WORD", payload: enterSecretWord });
+  };
+
   const resetGame = () => {
     setGiveUp(false);
     fetchSecretWord();
   };
 
   const fetchSecretWord = async () => {
-    const secretWord = await getSecretWord();
-    setSecretWord(secretWord);
+    const secretWord = await getSecretWord(setSecretWord);
+    // setSecretWord(secretWord);
   };
 
   useEffect(() => {
@@ -84,16 +94,26 @@ function App() {
       <LanguageContext.Provider value={{ language: state.language }}>
         <LanguagePicker setLanguage={setLanguage} />
         <GuessedWordsProvider>
-          <SuccessProvider>
-            {state.giveUp ? (
-              <GiveUpMessage secretWord={state.secretWord} />
-            ) : (
-              <Congrats />
-            )}
-            <NewWordButton onClick={resetGame} />
-            <Input secretWord={state.secretWord} onGiveUp={setGiveUp} />
-          </SuccessProvider>
-          <GuessedWords />
+          {state.enterSecretWord ? (
+            <EnterSecretWordForm
+              onSubmit={setSecretWord}
+              onCancel={() => setEnterSecretWord(false)}
+            />
+          ) : (
+            <div>
+              <SuccessProvider>
+                {state.giveUp ? (
+                  <GiveUpMessage secretWord={state.secretWord} />
+                ) : (
+                  <Congrats />
+                )}
+                <NewWordButton onClick={resetGame} />
+                <Input secretWord={state.secretWord} onGiveUp={setGiveUp} />
+              </SuccessProvider>
+              <GuessedWords />
+              <EnterSecretWordButton onClick={() => setEnterSecretWord(true)} />
+            </div>
+          )}
         </GuessedWordsProvider>
       </LanguageContext.Provider>
     </div>

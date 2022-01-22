@@ -11,12 +11,6 @@ import NewWordButton from "../components/NewWordButton";
  * Functional tests for App components
  */
 
-/**
- * Creates wrapper with specified conditions,
- * then submits a guessed word of 'train'
- * @param {object} state - Initial State
- * @returns {Wrapper} - Enzyme wrapper of mounted App component
- */
 const setup = ({ secretWord, guessedWords }) => {
   const wrapper = mount(
     <SuccessProvider>
