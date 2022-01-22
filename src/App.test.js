@@ -11,11 +11,6 @@ jest.mock("./actions");
 
 const originalUseReducer = React.useReducer;
 
-jest.mock("react", () => ({
-  ...jest.requireActual("react"),
-  useReducer: jest.fn(),
-}));
-
 const setup = () => {
   // useEffect does not run on shallow rendering
   return mount(<App />);
@@ -28,10 +23,7 @@ describe.each([
   let wrapper;
 
   beforeEach(() => {
-    React.useReducer.mockReturnValue([
-      { secretWord, language: "en" },
-      jest.fn(),
-    ]);
+    React.useReducer = () => [{ secretWord, language: "en" }, jest.fn()];
     wrapper = setup();
   });
 
@@ -39,14 +31,35 @@ describe.each([
     React.useReducer = originalUseReducer;
   });
 
-  test(`should ${spinnerShows ? "" : "not"} render spinner`, () => {
+  test(`should ${spinnerShows ? "" : "not"} render <Spinner />`, () => {
     const spinner = findByTestAttr(wrapper, "component-spinner");
     expect(spinner.exists()).toBe(spinnerShows);
   });
 
-  test(`should ${appShows ? "" : "not"} render app`, () => {
+  test(`should ${appShows ? "" : "not"} render <App />`, () => {
     const app = findByTestAttr(wrapper, "component-app");
     expect(app.exists()).toBe(appShows);
+  });
+});
+
+describe("server error", () => {
+  let wrapper;
+
+  beforeEach(() => {
+    mockGetSecretWord.mockImplementation((_, setServerError) =>
+      setServerError("Oops, error!")
+    );
+    wrapper = mount(<App />);
+  });
+
+  test("should render <ServerError />", () => {
+    const ServerError = findByTestAttr(wrapper, "component-server-error");
+    expect(ServerError).toHaveLength(1);
+  });
+
+  test("should not render <App />", () => {
+    const app = findByTestAttr(wrapper, "component-app");
+    expect(app).toHaveLength(0);
   });
 });
 

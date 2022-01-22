@@ -13,12 +13,14 @@ import NewWordButton from "./components/NewWordButton";
 import GiveUpMessage from "./components/GiveUpMessage";
 import EnterSecretWordButton from "./components/EnterSecretWordButton";
 import EnterSecretWordForm from "./components/EnterSecretWordForm";
+import ServerError from "./components/ServerError";
 
 const initialState = {
   language: "en",
   secretWord: null,
   giveUp: false,
   enterSecretWord: false,
+  serverError: "",
 };
 
 const reducer = (state, action) => {
@@ -31,17 +33,8 @@ const reducer = (state, action) => {
       return { ...state, giveUp: action.payload };
     case "SET_ENTER_SECRET_WORD":
       return { ...state, enterSecretWord: action.payload };
-    // case 'GUESS_WORD':
-    //   const success = action.payload === state.secretWord;
-    //   const guessedWord = {
-    //     guessedWord: action.payload,
-    //     letterMatchCount: getLetterMatchCount(action.payload, state.secretWord),
-    //   };
-    //   return {
-    //     ...state,
-    //     success,
-    //     guessedWords: [...state.guessedWords, guessedWord],
-    //   };
+    case "SET_SERVER_ERROR":
+      return { ...state, serverError: action.payload };
     default:
       throw new Error(`Invalid action type: ${action.type}`);
   }
@@ -53,6 +46,10 @@ function App() {
   const setSecretWord = (secretWord) => {
     dispatch({ type: "SET_SECRET_WORD", payload: secretWord });
     setEnterSecretWord(false);
+  };
+
+  const setServerError = (errMessage) => {
+    dispatch({ type: "SET_SERVER_ERROR", payload: errMessage });
   };
 
   const setLanguage = (language) => {
@@ -73,18 +70,23 @@ function App() {
   };
 
   const fetchSecretWord = async () => {
-    const secretWord = await getSecretWord(setSecretWord);
+    await getSecretWord(setSecretWord, setServerError);
+
+    // const secretWord = await getSecretWord();
     // setSecretWord(secretWord);
   };
 
   useEffect(() => {
     fetchSecretWord();
-
-    // alternatively
-    // getSecretWord().then((secretWord) => setSecretWord(secretWord));
   }, []);
 
-  if (!state.secretWord) {
+  if (state.serverError) {
+    return (
+      <div className="container">
+        <ServerError errMessage={state.serverError} onClick={fetchSecretWord} />
+      </div>
+    );
+  } else if (!state.secretWord) {
     return <Spinner />;
   }
 

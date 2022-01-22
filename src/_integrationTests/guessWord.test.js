@@ -97,7 +97,6 @@ describe("guess a word", () => {
     });
 
     test("should render <NewWordButton />", () => {
-      console.log(wrapper.debug());
       const newWordBtn = findByTestAttr(wrapper, "component-new-word-btn");
       expect(newWordBtn).toHaveLength(1);
     });
